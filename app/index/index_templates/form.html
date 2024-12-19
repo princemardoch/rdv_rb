@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Formulaire d'inscription</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/choices.js/10.1.0/choices.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/choices.js/10.1.0/choices.min.js"></script>
+</head>
+<body>
+    <div class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gradient-to-br from-blue-50 to-sky-100 py-6 sm:py-12">
+        <img src="/img/beams.jpg" alt="" class="absolute top-1/2 left-1/2 max-w-none -translate-x-1/2 -translate-y-1/2" width="1308" />
+        <div class="absolute inset-0 bg-[url(/img/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+        
+        <div class="absolute md:top-5 md:left-5 max-md:relative max-md:mb-4 flex items-center justify-center">
+            <img src="https://i.ibb.co/2FZ5zh0/Capture-d-e-cran-2024-11-09-a-17-44-08.png" alt="Logo" class="h-16 w-auto rounded-full" id="logo" />
+            <p class="text-4xl font-bold ml-2" id="company-name">BB Call</p>
+        </div>
+
+        <div class="relative bg-white px-8 pt-8 pb-7 shadow-2xl ring-1 ring-gray-900/10 sm:mx-auto sm:max-w-lg sm:rounded-xl sm:px-12">
+            <h1 class="text-2xl font-bold text-center text-gray-900" id="form-title">Formulaire d'inscription</h1>
+            <p class="text-base text-center text-gray-700" id="form-description">Veuillez remplir ce formulaire pour nous fournir vos coordonnées et nous faire part de vos attentes. Nous vous contacterons dès que possible.</p>
+            <div class="mx-auto max-w-md">
+                <div class="divide-y divide-gray-300/50">
+                    <form id="registration-form" class="space-y-5 py-6 text-lg leading-7 text-gray-700">
+                        <script>
+                          document.addEventListener('DOMContentLoaded', function() {
+                            const countrySelect = document.getElementById('country');
+
+                            // Récupérer la liste des pays via l'API REST Countries
+                            fetch('https://restcountries.com/v3.1/all')
+                                .then(response => response.json())
+                                .then(data => {
+                                    // Trier les pays par ordre alphabétique
+                                    data.sort((a, b) => a.name.common.localeCompare(b.name.common));
+
+                                    // Parcourir les pays et les ajouter à la liste
+                                    data.forEach(country => {
+                                        const option = document.createElement('option');
+                                        option.value = (country.name.common === 'Ivory Coast') ? 'Côte d\'Ivoire' : country.name.common; // Nom du pays
+                                        option.textContent = (country.name.common === 'Ivory Coast') ? 'Côte d\'Ivoire' : country.name.common; // Nom du pays
+                                        countrySelect.appendChild(option);
+                                    });
+
+                                    // Appliquer Choices.js au champ select pour permettre la recherche
+                                    new Choices(countrySelect, {
+                                        searchEnabled: true,
+                                        itemSelectText: '',
+                                    });
+                                })
+                                .catch(error => {
+                                    console.error('Erreur lors de la récupération des pays:', error);
+                                });
+                          });
+                        </script>
+                        <div class="mb-6">
+                            <label for="country" class="block mb-3 text-lg font-semibold text-gray-900">Choisissez votre pays</label>
+                            <select id="country" name="country" class="w-full p-3 border border-gray-300 rounded-md shadow-sm" required>
+                                <option value="">Sélectionnez votre pays</option>
+                                <option value="Côte d'Ivoire" selected>Côte d'Ivoire</option>
+                            </select>
+                        </div>
+                        <script>
+                          document.addEventListener('DOMContentLoaded', function() {
+                            const phoneInput = document.getElementById('phone');
+                            const phoneError = document.createElement('p');
+                            phoneError.classList.add('text-red-500', 'text-sm', 'mt-2');
+                            phoneError.style.display = 'none';
+                            phoneInput.insertAdjacentElement('afterend', phoneError);
+
+                            phoneInput.addEventListener('blur', function() {
+                              const phoneRegex = /^\d{2}\s\d{3}\s\d{3}\s\d{2}$/;
+                              if (!phoneRegex.test(phoneInput.value)) {
+                                phoneError.textContent = 'Numéro invalide. Veuillez entrer un numéro au format 07 000 000 00.';
+                                phoneError.style.display = 'block';
+                                phoneInput.classList.add('border-red-500');
+                              } else {
+                                phoneError.style.display = 'none';
+                                phoneInput.classList.remove('border-red-500');
+                              }
+                            });
+
+                            phoneInput.addEventListener('input', function() {
+                              let cleaned = phoneInput.value.replace(/\D/g, '');
+                              if (cleaned.length > 2) {
+                                cleaned = cleaned.replace(/(\d{2})(\d{0,3})(\d{0,3})(\d{0,2})/, function(match, p1, p2, p3, p4) {
+                                  return [p1, p2, p3, p4].filter(Boolean).join(' ');
+                                });
+                              }
+                              phoneInput.value = cleaned;
+                            });
+                          });
+                        </script>
+                        <div class="mb-6">
+                            <label for="phone" class="block mb-3 text-lg font-semibold text-gray-900">Numéro de téléphone</label>
+                            <input type="tel" id="phone" name="phone" class="bg-white border border-gray-400 text-gray-800 text-lg rounded-lg shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 focus:border-gray-400 block w-full p-3" placeholder="Ex: 07 00 00 00 00" required />
+                        </div>
+                        <div class="mb-6">
+                            <label for="fullname" class="block mb-3 text-lg font-semibold text-gray-900">Nom et prénom</label>
+                            <input type="text" id="fullname" name="fullname" class="bg-white border border-gray-400 text-gray-800 text-lg rounded-lg shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 focus:border-gray-400 block w-full p-3" required />
+                        </div>
+                        <div class="mb-6">
+                            <label for="experience" class="block mb-3 text-lg font-semibold text-gray-900">Années d'expérience</label>
+                            <input type="number" id="experience" name="experience" min="0" class="bg-white border border-gray-400 text-gray-800 text-lg rounded-lg shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 focus:border-gray-400 block w-full p-3" required />
+                        </div>
+                        <div class="mb-6">
+                          <fieldset>
+                              <legend class="block mb-3 text-lg font-semibold text-gray-900">Nombre d'employés</legend>
+                              <div class="space-y-3">
+                                  <label for="employees-1" class="flex items-center space-x-2 cursor-pointer">
+                                      <input type="radio" id="employees-1" name="employees" value="1-10" class="hidden peer" required>
+                                      <span class="w-5 h-5 border-2 border-gray-300 rounded-full peer-checked:bg-blue-600 peer-checked:border-blue-600 flex items-center justify-center">
+                                          <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+                                      </span>
+                                      <span class="text-gray-900">1-10</span>
+                                  </label>
+                                  <label for="employees-2" class="flex items-center space-x-2 cursor-pointer">
+                                      <input type="radio" id="employees-2" name="employees" value="11-50" class="hidden peer">
+                                      <span class="w-5 h-5 border-2 border-gray-300 rounded-full peer-checked:bg-blue-600 peer-checked:border-blue-600 flex items-center justify-center">
+                                          <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+                                      </span>
+                                      <span class="text-gray-900">11-50</span>
+                                  </label>
+                                  <label for="employees-3" class="flex items-center space-x-2 cursor-pointer">
+                                      <input type="radio" id="employees-3" name="employees" value="51-100" class="hidden peer">
+                                      <span class="w-5 h-5 border-2 border-gray-300 rounded-full peer-checked:bg-blue-600 peer-checked:border-blue-600 flex items-center justify-center">
+                                          <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+                                      </span>
+                                      <span class="text-gray-900">51-100</span>
+                                  </label>
+                                  <label for="employees-4" class="flex items-center space-x-2 cursor-pointer">
+                                      <input type="radio" id="employees-4" name="employees" value="Plus de 100" class="hidden peer">
+                                      <span class="w-5 h-5 border-2 border-gray-300 rounded-full peer-checked:bg-blue-600 peer-checked:border-blue-600 flex items-center justify-center">
+                                          <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+                                      </span>
+                                      <span class="text-gray-900">Plus de 100</span>
+                                  </label>
+                              </div>
+                          </fieldset>
+                      </div>
+                      
+                      <div class="mb-6">
+                          <fieldset>
+                              <legend class="block mb-3 text-lg font-semibold text-gray-900">Chiffre d'affaires estimé (en FCFA)</legend>
+                              <div class="space-y-3">
+                                  <label for="revenue-1" class="flex items-center space-x-2 cursor-pointer">
+                                      <input type="radio" id="revenue-1" name="revenue" value="0-5M" class="hidden peer" required>
+                                      <span class="w-5 h-5 border-2 border-gray-300 rounded-full peer-checked:bg-blue-600 peer-checked:border-blue-600 flex items-center justify-center">
+                                          <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+                                      </span>
+                                      <span class="text-gray-900">0-5M</span>
+                                  </label>
+                                  <label for="revenue-2" class="flex items-center space-x-2 cursor-pointer">
+                                      <input type="radio" id="revenue-2" name="revenue" value="5M-20M" class="hidden peer">
+                                      <span class="w-5 h-5 border-2 border-gray-300 rounded-full peer-checked:bg-blue-600 peer-checked:border-blue-600 flex items-center justify-center">
+                                          <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+                                      </span>
+                                      <span class="text-gray-900">5M-20M</span>
+                                  </label>
+                                  <label for="revenue-3" class="flex items-center space-x-2 cursor-pointer">
+                                      <input type="radio" id="revenue-3" name="revenue" value="20M-50M" class="hidden peer">
+                                      <span class="w-5 h-5 border-2 border-gray-300 rounded-full peer-checked:bg-blue-600 peer-checked:border-blue-600 flex items-center justify-center">
+                                          <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+                                      </span>
+                                      <span class="text-gray-900">20M-50M</span>
+                                  </label>
+                                  <label for="revenue-4" class="flex items-center space-x-2 cursor-pointer">
+                                      <input type="radio" id="revenue-4" name="revenue" value="Plus de 50M" class="hidden peer">
+                                      <span class="w-5 h-5 border-2 border-gray-300 rounded-full peer-checked:bg-blue-600 peer-checked:border-blue-600 flex items-center justify-center">
+                                          <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+                                      </span>
+                                      <span class="text-gray-900">Plus de 50M</span>
+                                  </label>
+                              </div>
+                          </fieldset>
+                      </div>
+                      
+                      <div class="mb-6">
+                          <fieldset>
+                              <legend class="block mb-3 text-lg font-semibold text-gray-900">Parlez-nous de vos attentes</legend>
+                              <div class="space-y-3">
+                                  <label for="expectations-1" class="flex items-center space-x-2 cursor-pointer">
+                                      <input type="radio" id="expectations-1" name="expectations" value="Formation" class="hidden peer" required>
+                                      <span class="w-5 h-5 border-2 border-gray-300 rounded-full peer-checked:bg-blue-600 peer-checked:border-blue-600 flex items-center justify-center">
+                                          <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+                                      </span>
+                                      <span class="text-gray-900">Formation</span>
+                                  </label>
+                                  <label for="expectations-2" class="flex items-center space-x-2 cursor-pointer">
+                                      <input type="radio" id="expectations-2" name="expectations" value="Financement" class="hidden peer">
+                                      <span class="w-5 h-5 border-2 border-gray-300 rounded-full peer-checked:bg-blue-600 peer-checked:border-blue-600 flex items-center justify-center">
+                                          <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+                                      </span>
+                                      <span class="text-gray-900">Financement</span>
+                                  </label>
+                                  <label for="expectations-3" class="flex items-center space-x-2 cursor-pointer">
+                                      <input type="radio" id="expectations-3" name="expectations" value="Accompagnement" class="hidden peer">
+                                      <span class="w-5 h-5 border-2 border-gray-300 rounded-full peer-checked:bg-blue-600 peer-checked:border-blue-600 flex items-center justify-center">
+                                          <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+                                      </span>
+                                      <span class="text-gray-900">Accompagnement</span>
+                                  </label>
+                                  <label for="expectations-4" class="flex items-center space-x-2 cursor-pointer">
+                                      <input type="radio" id="expectations-4" name="expectations" value="Autre" class="hidden peer">
+                                      <span class="w-5 h-5 border-2 border-gray-300 rounded-full peer-checked:bg-blue-600 peer-checked:border-blue-600 flex items-center justify-center">
+                                          <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+                                      </span>
+                                      <span class="text-gray-900">Autre</span>
+                                  </label>
+                              </div>
+                          </fieldset>
+                      </div>
+                      
+                      <button 
+                      type="submit" 
+                      id="submit-button" 
+                      class="w-full text-white bg-sky-500 hover:bg-sky-600 focus:outline-none font-semibold rounded-lg text-lg px-3 py-3 text-center">
+                      Envoyer
+                  </button>
+                  
+                  <script>
+                      document.getElementById('submit-button').addEventListener('click', function() {
+                          window.location.href = '{{url_for('index.success')}}';
+                      });
+                  </script>
+                        <ul class="space-y-4 pt-7" id="benefits-list">
+                            <li class="flex items-center">
+                                <svg class="h-6 w-6 flex-none fill-sky-100 stroke-sky-500 stroke-2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="11" />
+                                    <path d="m8 13 2.165 2.165a1 1 0 0 0 1.521-.126L16 9" fill="none" />
+                                </svg>
+                                <p class="ml-4 font-medium text-gray-900">Satisfait ou remboursé</p>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="h-6 w-6 flex-none fill-sky-100 stroke-sky-500 stroke-2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="11" />
+                                    <path d="m8 13 2.165 2.165a1 1 0 0 0 1.521-.126L16 9" fill="none" />
+                                </svg>
+                                <p class="ml-4 font-medium text-gray-900">Service après vente</p>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="h-6 w-6 flex-none fill-sky-100 stroke-sky-500 stroke-2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="11" />
+                                    <path d="m8 13 2.165 2.165a1 1 0 0 0 1.521-.126L16 9" fill="none" />
+                                </svg>
+                                <p class="ml-4 font-medium text-gray-900">Paiement sécurisé</p>
+                            </li>
+                        </ul>
+                    </form>
+                    <div class="pt-10 text-lg font-semibold leading-7">
+                        <p class="text-gray-900">Besoin d'aide pour remplir le formulaire ?</p>
+                        <p>
+                            <a href="https://tailwindcss.com/docs" class="text-sky-500 hover:text-sky-600">Contactez notre support &rarr;</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="mt-12 text-center">
+            <p class="text-gray-600 text-sm">&copy; 2024 Votre Entreprise. Tous droits réservés.</p>
+        </footer>
+    </div>
+</body>
+</html>

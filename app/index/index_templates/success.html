@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rendez-vous Confirmé</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-white rounded-lg shadow-xl p-8">
+        <!-- Icône de succès -->
+        <div class="flex justify-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Titre -->
+        <h1 class="mt-4 text-2xl font-bold text-center text-gray-900">
+            Rendez-vous confirmé !
+        </h1>
+
+        <!-- Message -->
+        <p class="mt-4 text-center text-gray-600">
+            Votre rendez-vous a été enregistré avec succès. Vous recevrez un email de confirmation dans quelques minutes.
+        </p>
+
+        <!-- Détails -->
+        <div class="mt-6 bg-gray-50 rounded-lg p-4">
+            <div class="space-y-2">
+                <p class="text-sm text-gray-600">
+                    <span class="font-semibold">Date :</span> 
+                    <span>Jeudi 19 Décembre 2024</span>
+                </p>
+                <p class="text-sm text-gray-600">
+                    <span class="font-semibold">Heure :</span>
+                    <span>14:30</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Boutons -->
+        <div class="mt-8 space-y-3">
+            <button class="w-full bg-green-500 text-white px-4 py-3 rounded-lg font-semibold hover:bg-green-600 transition duration-200">
+                Voir mes rendez-vous
+            </button>
+            <button class="w-full bg-gray-100 text-gray-700 px-4 py-3 rounded-lg font-semibold hover:bg-gray-200 transition duration-200">
+                Retour à l'accueil
+            </button>
+        </div>
+    </div>
+</body>
+</html>

@@ -9,107 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/choices.js/10.1.0/choices.min.js"></script>
     <!-- Inclusion de Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-p1HlfkXW6yXbd1zOtfKgO2ntZQlgGzD0RQxNxwLhI6EBj5d9X+UqvgE48tuD5U8GfQxkF6o4aIwZFTZ54xYlBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const consultationOptions = document.querySelectorAll('.consultation-option');
-            const dayOptions = document.querySelectorAll('.day-selection');
-            const timeOptions = document.querySelectorAll('.time-selection');
-            const selectionInfo = document.querySelector('.selection-info');
 
-            // Fonction pour gérer les sélections
-            function handleSelection(options) {
-                options.forEach(option => {
-                    option.addEventListener('click', function() {
-                        // Si le bouton est désactivé, ne rien faire
-                        if (this.disabled) return;
-
-                        // Retirer les classes Tailwind des autres options
-                        options.forEach(opt => {
-                            opt.classList.remove('border-blue-500', 'bg-blue-50');
-                        });
-
-                        // Ajouter les classes Tailwind à l'option sélectionnée
-                        this.classList.add('border-blue-500', 'bg-blue-50');
-                        updateSelectionInfo();
-                    });
-                });
-            }
-
-            // Initialiser les sélections
-            handleSelection(consultationOptions);
-            handleSelection(dayOptions);
-            handleSelection(timeOptions);
-
-            // Fonction pour mettre à jour les informations de sélection
-            function updateSelectionInfo() {
-                const selectedConsultation = Array.from(consultationOptions).find(opt => opt.classList.contains('border-blue-500'))?.querySelector('h4').textContent || 'Aucune consultation sélectionnée';
-                const selectedDay = Array.from(dayOptions).find(opt => opt.classList.contains('border-blue-500'))?.querySelector('.font-semibold').textContent || 'Aucun jour sélectionné';
-                const selectedTime = Array.from(timeOptions).find(opt => opt.classList.contains('border-blue-500'))?.textContent.trim() || 'Aucun horaire sélectionné';
-
-                selectionInfo.innerHTML = `Consultation - ${selectedDay} à ${selectedTime}`;
-            }
-
-            // Gestion de la soumission du formulaire
-            const reservationForm = document.getElementById('reservation-form');
-            reservationForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                const selectedConsultation = Array.from(consultationOptions).find(opt => opt.classList.contains('border-blue-500'))?.querySelector('h4').textContent;
-                const selectedDay = Array.from(dayOptions).find(opt => opt.classList.contains('border-blue-500'))?.querySelector('.font-semibold').textContent;
-                const selectedTime = Array.from(timeOptions).find(opt => opt.classList.contains('border-blue-500'))?.textContent.trim();
-
-                if (!selectedConsultation || !selectedDay || !selectedTime) {
-                    showNotification('Veuillez sélectionner une consultation, un jour et un horaire.', 'error');
-                    return;
-                }
-
-                // Logique pour envoyer les données au backend
-                showNotification('Réservation confirmée !', 'success');
-
-                // Réinitialiser le formulaire après confirmation
-                reservationForm.reset();
-
-                // Réinitialiser les sélections visuelles
-                consultationOptions.forEach(opt => opt.classList.remove('border-blue-500', 'bg-blue-50'));
-                dayOptions.forEach(opt => opt.classList.remove('border-blue-500', 'bg-blue-50'));
-                timeOptions.forEach(opt => opt.classList.remove('border-blue-500', 'bg-blue-50'));
-                updateSelectionInfo();
-            });
-
-            // Fonction pour afficher la notification
-            function showNotification(message, type) {
-                const notification = document.getElementById('notification');
-                const notificationContent = document.getElementById('notification-content');
-
-                // Définir le message
-                notificationContent.textContent = message;
-
-                // Définir le type (success ou error)
-                if (type === 'success') {
-                    notification.classList.remove('bg-red-500');
-                    notification.classList.add('bg-green-500');
-                } else if (type === 'error') {
-                    notification.classList.remove('bg-green-500');
-                    notification.classList.add('bg-red-500');
-                }
-
-                // Afficher la notification
-                notification.classList.remove('hidden');
-                notification.classList.add('animate-slide-down');
-
-                // Masquer la notification après 5 secondes
-                setTimeout(() => {
-                    notification.classList.remove('animate-slide-down');
-                    notification.classList.add('animate-slide-up');
-                    // Masquer complètement après l'animation
-                    notification.addEventListener('animationend', () => {
-                        notification.classList.add('hidden');
-                        notification.classList.remove('animate-slide-up');
-                    }, { once: true });
-                }, 5000);
-            }
-        });
-    </script>
     <style>
         button:disabled {
             cursor: not-allowed;
@@ -169,20 +69,28 @@
                         <div class="space-y-4">
                             {% for option in rdv_info %}
                             <!-- Consultation Option -->
-                            <div class="consultation-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition" tabindex="0">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <h4 class="font-semibold text-gray-900">{{ option.display_name }}</h4>
-                                        <p class="text-gray-600 text-sm mt-1">{{ option.subtitle }}</p>
+                            <label class="block">
+                                <input 
+                                    type="radio" 
+                                    name="consultation" 
+                                    value="{{ option.display_name }}" 
+                                    class="absolute opacity-0 w-0 h-0"
+                                    required
+                                >
+                                <div class="consultation-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition peer-checked:border-blue-500 peer-checked:bg-blue-50">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <h4 class="font-semibold text-gray-900">{{ option.display_name }}</h4>
+                                            <p class="text-gray-600 text-sm mt-1">{{ option.subtitle }}</p>
+                                        </div>
+                                        <span class="text-blue-600 font-semibold">{{ option.price_display.xof }}</span>
                                     </div>
-                                    <span class="text-blue-600 font-semibold">{{ option.price_display.xof }}</span>
+                                    <div class="mt-3 flex items-center text-gray-500 text-sm">
+                                        <i class="fas fa-clock mr-2"></i>
+                                        <span>{{ option.duration }}</span>
+                                    </div>
                                 </div>
-                                <div class="mt-3 flex items-center text-gray-500 text-sm">
-                                    <i class="fas fa-clock mr-2"></i>
-                                    <span>{{ option.duration }}</span>
-                                </div>
-                                <input type="radio" name="consultation" value="{{ option.display_name }}" class="sr-only" required>
-                            </div>
+                            </label>
                             {% endfor %}
                         </div>
                     </fieldset>
@@ -194,54 +102,96 @@
                     <fieldset>
                         <legend class="text-xl font-semibold mb-4">Sélectionner un jour</legend>
                         <div class="grid grid-cols-7 gap-3 mb-8 max-lg:grid-cols-4 max-md:grid-cols-4 max-sm:grid-cols-2">
-                            <button type="button" class="day-selection flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition" tabindex="0" data-day="Lundi">
-                                <span class="text-gray-600 text-sm mb-1">Lun</span>
-                            </button>
-                            <button type="button" class="day-selection flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition" tabindex="0" data-day="Mardi">
-                                <span class="text-gray-600 text-sm mb-1">Mar</span>
-                            </button>
-                            <button type="button" class="day-selection flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition" tabindex="0" data-day="Mercredi">
-                                <span class="text-gray-600 text-sm mb-1">Mer</span>
-                            </button>
-                            <button type="button" class="day-selection flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition" tabindex="0" data-day="Jeudi">
-                                <span class="text-gray-600 text-sm mb-1">Jeu</span>
-                            </button>
-                            <button type="button" class="day-selection flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition" tabindex="0" data-day="Vendredi">
-                                <span class="text-gray-600 text-sm mb-1">Ven</span>
-                            </button>
-                            <button type="button" class="day-selection flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition" tabindex="0" data-day="Samedi">
-                                <span class="text-gray-600 text-sm mb-1">Sam</span>
-                            </button>
-                            <button type="button" class="day-selection flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg opacity-50 cursor-not-allowed" disabled tabindex="-1" data-day="Dimanche">
-                                <span class="text-gray-600 text-sm mb-1">Dim</span>
-                            </button>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="day" value="Lundi" class="absolute opacity-0 w-0 h-0">
+                                <div class="day-selection flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition peer-checked:border-blue-500 peer-checked:bg-blue-50" data-day="Lundi">
+                                    <span class="text-gray-600 text-base">Lundi</span>
+                                </div>
+                            </label>
+                        
+                            <label class="cursor-pointer">
+                                <input type="radio" name="day" value="Mardi" class="absolute opacity-0 w-0 h-0">
+                                <div class="day-selection flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition peer-checked:border-blue-500 peer-checked:bg-blue-50" data-day="Mardi">
+                                    <span class="text-gray-600 text-base">Mardi</span>
+                                </div>
+                            </label>
+                        
+                            <label class="cursor-pointer">
+                                <input type="radio" name="day" value="Mercredi" class="absolute opacity-0 w-0 h-0">
+                                <div class="day-selection flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition peer-checked:border-blue-500 peer-checked:bg-blue-50" data-day="Mercredi">
+                                    <span class="text-gray-600 text-base">Mercredi</span>
+                                </div>
+                            </label>
+                        
+                            <label class="cursor-pointer">
+                                <input type="radio" name="day" value="Jeudi" class="absolute opacity-0 w-0 h-0">
+                                <div class="day-selection flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition peer-checked:border-blue-500 peer-checked:bg-blue-50" data-day="Jeudi">
+                                    <span class="text-gray-600 text-base">Jeudi</span>
+                                </div>
+                            </label>
+                        
+                            <label class="cursor-pointer">
+                                <input type="radio" name="day" value="Vendredi" class="absolute opacity-0 w-0 h-0">
+                                <div class="day-selection flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition peer-checked:border-blue-500 peer-checked:bg-blue-50" data-day="Vendredi">
+                                    <span class="text-gray-600 text-base">Vendredi</span>
+                                </div>
+                            </label>
+                        
+                            <label class="cursor-pointer">
+                                <input type="radio" name="day" value="Samedi" class="absolute opacity-0 w-0 h-0">
+                                <div class="day-selection flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition peer-checked:border-blue-500 peer-checked:bg-blue-50" data-day="Samedi">
+                                    <span class="text-gray-600 text-base">Samedi</span>
+                                </div>
+                            </label>
+                        
+                            <label class="cursor-not-allowed">
+                                <input type="radio" name="day" value="Dimanche" disabled class="absolute opacity-0 w-0 h-0">
+                                <div class="day-selection flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg opacity-50" data-day="Dimanche">
+                                    <span class="text-gray-600 text-base">Dim</span>
+                                </div>
+                            </label>
                         </div>
-                        <!-- Champ caché pour le jour -->
-                        <input type="hidden" id="selected_day" name="day" required>
                     </fieldset>
         
                     <!-- Available Times -->
                     <fieldset>
                         <legend class="text-xl font-semibold mb-4">Horaires disponibles</legend>
                         <div class="grid grid-cols-3 gap-3">
-                            <button type="button" class="time-selection py-3 px-4 border-2 border-gray-200 rounded-lg text-center hover:border-blue-500 hover:bg-blue-50 transition font-medium" tabindex="0" data-time="09:00">
-                                09:00
-                            </button>
-                            <button type="button" class="time-selection py-3 px-4 border-2 border-gray-200 rounded-lg text-center hover:border-blue-500 hover:bg-blue-50 transition font-medium" tabindex="0" data-time="10:30">
-                                10:30
-                            </button>
-                            <button type="button" class="time-selection py-3 px-4 border-2 border-gray-200 rounded-lg text-center hover:border-blue-500 hover:bg-blue-50 transition font-medium" tabindex="0" data-time="14:00">
-                                14:00
-                            </button>
-                            <button type="button" class="time-selection py-3 px-4 border-2 border-gray-200 rounded-lg text-center hover:border-blue-500 hover:bg-blue-50 transition font-medium" tabindex="0" data-time="15:30">
-                                15:30
-                            </button>
-                            <button type="button" class="time-selection py-3 px-4 border-2 border-gray-200 rounded-lg text-center hover:border-blue-500 hover:bg-blue-50 transition font-medium" tabindex="0" data-time="17:00">
-                                17:00
-                            </button>
-                        </div>
-                        <!-- Champ caché pour l'heure -->
-                        <input type="hidden" id="selected_time" name="time" required>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="time" value="09:00" class="absolute opacity-0 w-0 h-0">
+                                <div class="time-selection py-3 px-4 border-2 border-gray-200 rounded-lg text-center hover:border-blue-500 hover:bg-blue-50 transition font-medium peer-checked:border-blue-500 peer-checked:bg-blue-50" data-time="09:00">
+                                    09:00
+                                </div>
+                            </label>
+                         
+                            <label class="cursor-pointer">
+                                <input type="radio" name="time" value="10:30" class="absolute opacity-0 w-0 h-0">
+                                <div class="time-selection py-3 px-4 border-2 border-gray-200 rounded-lg text-center hover:border-blue-500 hover:bg-blue-50 transition font-medium peer-checked:border-blue-500 peer-checked:bg-blue-50" data-time="10:30">
+                                    10:30
+                                </div>
+                            </label>
+                         
+                            <label class="cursor-pointer">
+                                <input type="radio" name="time" value="14:00" class="absolute opacity-0 w-0 h-0">
+                                <div class="time-selection py-3 px-4 border-2 border-gray-200 rounded-lg text-center hover:border-blue-500 hover:bg-blue-50 transition font-medium peer-checked:border-blue-500 peer-checked:bg-blue-50" data-time="14:00">
+                                    14:00
+                                </div>
+                            </label>
+                         
+                            <label class="cursor-pointer">
+                                <input type="radio" name="time" value="15:30" class="absolute opacity-0 w-0 h-0">
+                                <div class="time-selection py-3 px-4 border-2 border-gray-200 rounded-lg text-center hover:border-blue-500 hover:bg-blue-50 transition font-medium peer-checked:border-blue-500 peer-checked:bg-blue-50" data-time="15:30">
+                                    15:30
+                                </div>
+                            </label>
+                         
+                            <label class="cursor-pointer">
+                                <input type="radio" name="time" value="17:00" class="absolute opacity-0 w-0 h-0">
+                                <div class="time-selection py-3 px-4 border-2 border-gray-200 rounded-lg text-center hover:border-blue-500 hover:bg-blue-50 transition font-medium peer-checked:border-blue-500 peer-checked:bg-blue-50" data-time="17:00">
+                                    17:00
+                                </div>
+                            </label>
+                         </div>
                     </fieldset>
                 </div>
             </div>
@@ -253,9 +203,9 @@
                         <h3 class="text-lg font-semibold">Votre sélection</h3>
                         <p class="text-gray-600 mt-1 selection-info">Aucune sélection pour le moment</p>
                     </div>
-                    <a href="{{url_for('index.contact')}}" class="bg-blue-500 mt-3 text-lg text-white px-8 py-3 rounded-lg hover:bg-blue-600 transition font-medium">
+                    <button type="submit" class="bg-blue-500 mt-3 text-lg text-white px-8 py-3 rounded-lg hover:bg-blue-600 transition font-medium">
                         Confirmer le RDV
-                    </a>
+                    </button>
                 </div>
             </div>
         </form>
@@ -263,63 +213,73 @@
         <!-- JavaScript pour gérer les sélections et mettre à jour les champs cachés -->
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                const consultationOptions = document.querySelectorAll('.consultation-option');
-                const dayOptions = document.querySelectorAll('.day-selection');
-                const timeOptions = document.querySelectorAll('.time-selection');
-                const selectionInfo = document.querySelector('.selection-info');
-                const selectedDayInput = document.getElementById('selected_day');
-                const selectedTimeInput = document.getElementById('selected_time');
-        
-                // Fonction pour gérer les sélections
-                function handleSelection(options, selectedClass, inputField, dataAttribute) {
-                    options.forEach(option => {
-                        option.addEventListener('click', function() {
-                            // Si le bouton est désactivé, ne rien faire
-                            if (this.disabled) return;
-        
-                            // Enlever la classe 'selected' de tous les éléments
-                            options.forEach(opt => opt.classList.remove('selected'));
-                            // Ajouter la classe 'selected' à l'élément cliqué
-                            this.classList.add('selected');
-        
-                            // Mettre à jour le champ caché avec la valeur sélectionnée
-                            inputField.value = this.getAttribute(dataAttribute);
-        
-                            // Mettre à jour les informations de sélection
-                            updateSelectionInfo();
-                        });
-                    });
-                }
-        
-                // Fonction pour mettre à jour les informations de sélection
-                function updateSelectionInfo() {
-                    const selectedConsultation = document.querySelector('.consultation-option.selected h4')?.textContent || 'Aucune consultation sélectionnée';
-                    const selectedDay = selectedDayInput.value || 'Aucun jour sélectionné';
-                    const selectedTime = selectedTimeInput.value || 'Aucun horaire sélectionné';
-        
-                    selectionInfo.innerHTML = `Consultation - ${selectedDay} à ${selectedTime}`;
-                }
-        
-                // Initialiser les sélections
-                handleSelection(consultationOptions, 'consultation-option', null, null); // Les consultations sont gérées par les inputs radio
-                handleSelection(dayOptions, 'day-selection', selectedDayInput, 'data-day');
-                handleSelection(timeOptions, 'time-selection', selectedTimeInput, 'data-time');
-        
-                // Gestion des sélections pour les consultations
-                consultationOptions.forEach(option => {
-                    const radioInput = option.querySelector('input[type="radio"]');
-                    option.addEventListener('click', function() {
-                        consultationOptions.forEach(opt => opt.classList.remove('selected'));
-                        this.classList.add('selected');
-                        radioInput.checked = true;
-                        updateSelectionInfo();
-                    });
+    // Sélectionner tous les éléments de formulaire nécessaires
+    const form = document.getElementById('reservation-form');
+    const selectionInfo = document.querySelector('.selection-info');
+
+    // Fonction pour gérer la sélection des consultations
+    function handleConsultationSelection() {
+        const consultationInputs = form.querySelectorAll('input[name="consultation"]');
+        consultationInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                // Mettre à jour l'apparence
+                const allOptions = document.querySelectorAll('.consultation-option');
+                allOptions.forEach(opt => {
+                    opt.classList.remove('border-blue-500', 'bg-blue-50');
                 });
-        
-                // Mise à jour des informations initiales
+                
+                this.closest('label').querySelector('.consultation-option')
+                    .classList.add('border-blue-500', 'bg-blue-50');
+                
                 updateSelectionInfo();
             });
-        </script>        
+        });
+    }
+
+    // Fonction pour gérer la sélection des jours
+    function handleDaySelection() {
+        const dayInputs = form.querySelectorAll('input[name="day"]');
+        dayInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                // Mettre à jour l'apparence
+                const allDays = document.querySelectorAll('.day-selection');
+                allDays.forEach(day => {
+                    day.classList.remove('border-blue-500', 'bg-blue-50');
+                });
+                
+                this.closest('label').querySelector('.day-selection')
+                    .classList.add('border-blue-500', 'bg-blue-50');
+                
+                updateSelectionInfo();
+            });
+        });
+    }
+
+    // Fonction pour gérer la sélection des horaires
+    function handleTimeSelection() {
+        const timeInputs = form.querySelectorAll('input[name="time"]');
+        timeInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                // Mettre à jour l'apparence
+                const allTimes = document.querySelectorAll('.time-selection');
+                allTimes.forEach(time => {
+                    time.classList.remove('border-blue-500', 'bg-blue-50');
+                });
+                
+                this.closest('label').querySelector('.time-selection')
+                    .classList.add('border-blue-500', 'bg-blue-50');
+                
+                updateSelectionInfo();
+            });
+        });
+    }
+
+ 
+    // Initialiser tous les gestionnaires d'événements
+    handleConsultationSelection();
+    handleDaySelection();
+    handleTimeSelection();
+});        </script>      
 
         <!-- Payment Methods -->
         <div class="mt-12 flex justify-center space-x-6 items-center flex-wrap">

@@ -23,7 +23,7 @@
             <p class="text-base text-center text-gray-700" id="form-description">Veuillez remplir ce formulaire pour nous fournir vos coordonnées et nous faire part de vos attentes. Nous vous contacterons dès que possible.</p>
             <div class="mx-auto max-w-md">
                 <div class="divide-y divide-gray-300/50">
-                    <form id="registration-form" class="space-y-5 py-6 text-lg leading-7 text-gray-700">
+                    <form id="registration-form" class="space-y-5 py-6 text-lg leading-7 text-gray-700" action="{{ url_for('index.contact') }}" method="POST">
                         <script>
                           document.addEventListener('DOMContentLoaded', function() {
                             const countrySelect = document.getElementById('country');
@@ -219,11 +219,6 @@
                       Envoyer
                   </button>
                   
-                  <script>
-                      document.getElementById('submit-button').addEventListener('click', function() {
-                          window.location.href = '{{url_for('index.success')}}';
-                      });
-                  </script>
                         <ul class="space-y-4 pt-7" id="benefits-list">
                             <li class="flex items-center">
                                 <svg class="h-6 w-6 flex-none fill-sky-100 stroke-sky-500 stroke-2" stroke-linecap="round" stroke-linejoin="round">

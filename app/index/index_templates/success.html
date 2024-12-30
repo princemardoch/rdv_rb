@@ -28,27 +28,43 @@
         </p>
 
         <!-- Détails -->
+         {% if reservation_data %}
         <div class="mt-6 bg-gray-50 rounded-lg p-4">
             <div class="space-y-2">
                 <p class="text-sm text-gray-600">
-                    <span class="font-semibold">Date :</span> 
-                    <span>Jeudi 19 Décembre 2024</span>
+                    <span class="font-semibold">Consultation :</span> 
+                    <span> {{reservation_data.get('consultation')}}</span>
                 </p>
                 <p class="text-sm text-gray-600">
-                    <span class="font-semibold">Heure :</span>
-                    <span>14:30</span>
+                    <span class="font-semibold">Date :</span> 
+                    <span> {{reservation_data.get('day')}}</span>
+                </p>
+                <p class="text-sm text-gray-600">
+                    <span class="font-semibold">Heure :</span> 
+                    <span>{{reservation_data.get('time')}}</span>
                 </p>
             </div>
         </div>
+        {% endif %}
 
         <!-- Boutons -->
         <div class="mt-8 space-y-3">
-            <button class="w-full bg-green-500 text-white px-4 py-3 rounded-lg font-semibold hover:bg-green-600 transition duration-200">
-                Voir mes rendez-vous
+            <button id="more-rb-info" class="w-full bg-green-500 text-white px-4 py-3 rounded-lg font-semibold hover:bg-green-600 transition duration-200">
+                Qui est Roger Bango
             </button>
-            <button class="w-full bg-gray-100 text-gray-700 px-4 py-3 rounded-lg font-semibold hover:bg-gray-200 transition duration-200">
+            <script>
+                document.getElementById('more-rb-info').addEventListener('click', function() {
+                    window.location.href = 'https://qrfy.com/api/storage/gcs/pdf/qrfyprod/25b2da83-c92d-4b98-91fc-ab34e74cf0a4.pdf';
+                });
+            </script>
+            <button id="back-home" class="w-full bg-gray-100 text-gray-700 px-4 py-3 rounded-lg font-semibold hover:bg-gray-200 transition duration-200">
                 Retour à l'accueil
             </button>
+            <script>
+                document.getElementById('back-home').addEventListener('click', function() {
+                    window.location.href = '/';
+                });
+            </script>
         </div>
     </div>
 </body>

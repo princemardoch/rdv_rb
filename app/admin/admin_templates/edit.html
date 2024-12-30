@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier Rendez-vous</title>
+    <link rel="stylesheet" href="./../../static/output.css">
+</head>
+<body class="bg-gray-100">
+    <div id="flash-message" class="fixed top-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-md mx-auto p-4 animate-[slideDown_0.5s_ease-out]">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    {% if category == 'success' %}
+                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-lg">
+                        <div class="flex items-center">
+                            <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <p class="font-medium">{{ message }}</p>
+                        </div>
+                    </div>
+                    {% elif category == 'error' %}
+                    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-lg">
+                        <div class="flex items-center">
+                            <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                            </svg>
+                            <p class="font-medium">{{ message }}</p>
+                        </div>
+                    </div>
+                    {% elif category == 'info' %}
+                    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded shadow-lg">
+                        <div class="flex items-center">
+                            <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                            </svg>
+                            <p class="font-medium">{{ message }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    
+    <style>
+        @keyframes slideDown {
+            from {
+                transform: translate(-50%, -100%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+    </style>
+    
+    <script>
+        // Auto-hide the flash message after 3 seconds
+        setTimeout(() => {
+            const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                flashMessage.style.transition = 'opacity 0.5s ease-out';
+                flashMessage.style.opacity = '0';
+                setTimeout(() => {
+                    flashMessage.remove();
+                }, 500);
+            }
+        }, 3000);
+    </script>
+
+    <div class="min-h-screen">
+        <!-- Mobile menu button -->
+        <div class="lg:hidden fixed top-0 left-0 z-50 p-4">
+            <button onclick="document.getElementById('sidebar').classList.toggle('-translate-x-full')" 
+                    class="p-2 rounded-lg bg-white shadow">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen bg-white border-r border-gray-200 transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0">
+            <div class="px-6 py-4">
+                <h2 class="text-xl font-bold text-gray-800">BB Call</h2>
+            </div>
+            <nav class="px-3 py-4">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="{{ url_for('admin.reservations') }}" class="flex items-center p-3 text-blue-600 bg-blue-50 rounded-lg"">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                            </svg>
+                            Dashboard
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a href="#" class="flex items-center p-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path>
+                            </svg>
+                            Notifications
+                        </a>
+                    </li> -->
+                    <li>
+                        <a href="{{ url_for('admin.calendar') }}" class="flex items-center p-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                            </svg>
+                            Calendrier
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="lg:ml-64 p-4 lg:p-8 pt-16 lg:pt-8">
+            <!-- Header -->
+            <header class="mb-8">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <a href="{{ url_for('admin.home') }}" class="mr-4 text-gray-500 hover:text-gray-700">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                            </svg>
+                        </a>
+                        <h1 class="text-2xl font-bold text-gray-900">Modifier Rendez-vous</h1>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Edit Form -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="p-6">
+                    <form action="{{ url_for('admin.edit_reservation', rdv_id=reservation['id']) }}" method="POST" class="space-y-6">
+                        <!-- Consultation Information -->
+                        <div class="bg-gray-50 p-4 rounded-lg space-y-3">
+                            <h2 class="text-lg font-medium text-gray-900">Informations de consultation</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <div>
+                                    <p class="text-md text-gray-500">Pays</p>
+                                    <p class="text-lg font-medium text-gray-900">{{ reservation['country'] }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-md text-gray-500">Expérience</p>
+                                    <p class="text-lg font-medium text-gray-900">{{ reservation['experience'] }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-md text-gray-500">Nombre d'employés</p>
+                                    <p class="text-lg font-medium text-gray-900">{{ reservation['employees'] }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-md text-gray-500">Revenus</p>
+                                    <p class="text-lg font-medium text-gray-900">{{ reservation['revenue'] }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-md text-gray-500">Attentes</p>
+                                    <p class="text-lg font-medium text-gray-900">{{ reservation['expectations'] }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-md text-gray-500">Type de consultation</p>
+                                    <p class="text-lg font-medium text-gray-900">{{ reservation['consultation'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+                                            
+                        <!-- Client Information -->
+                        <div class="space-y-4">
+                            <h2 class="text-lg font-medium text-gray-900">Informations du client</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="fullname" class="block text-sm font-medium text-gray-700">Nom</label>
+                                    <input type="text" id="fullname" name="fullname" value="{{ reservation['fullname'] }}" 
+                                        class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label for="phone_number" class="block text-sm font-medium text-gray-700">Numéro de téléphone</label>
+                                    <input type="phone_number" id="phone_number" name="phone_number" value="{{ reservation['phone'] }}" 
+                                        class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                </div>
+                            </div>
+                        </div>
+                     
+                        <!-- Appointment Details -->
+                        <div class="space-y-4">
+                            <h2 class="text-lg font-medium text-gray-900">Détails du rendez-vous</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label for="day" class="block text-sm font-medium text-gray-700">Date</label>
+                                    <input type="date" id="day" name="day" value="{{ reservation['day'] }}" 
+                                        class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label for="time" class="block text-sm font-medium text-gray-700">Heure</label>
+                                    <input type="time" id="time" name="time" value="{{ reservation['time'] }}" 
+                                        class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label for="status" class="block text-sm font-medium text-gray-700">Statut</label>
+                                    <select id="status" name="status" class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <option value="finish" {% if reservation['status'] == 'finish' %}selected{% endif %}>Fait</option>
+                                        <option value="confirmed" {% if reservation['status'] == 'confirmed' %}selected{% endif %}>Confirmé</option>
+                                        <option value="pending" {% if reservation['status'] == 'pending' %}selected{% endif %}>En attente</option>
+                                        <option value="cancelled" {% if reservation['status'] == 'cancelled' %}selected{% endif %}>Annulé</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                     
+                        <!-- Notes -->
+                        <div class="space-y-4">
+                            <h2 class="text-lg font-medium text-gray-900">Notes</h2>
+                            <textarea id="notes" name="notes" rows="4" 
+                                      class="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                      placeholder="Ajoutez des notes concernant le rendez-vous...">{{ reservation['notes'] }}</textarea>
+                        </div>
+                        <div class="flex justify-end space-x-4 pt-4 border-t">
+                            
+                            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                Enregistrer les modifications
+                            </button>
+                        </div>
+                    </form>
+                    <form id="delete_rdv_form" name="delete_rdv_form" action="{{ url_for('admin.delete_reservation', rdv_id=reservation['id']) }}" method="POST" class="mt-10">
+                        <button for="delete_rdv_form" type="submit" id='delete_rdv' class="px-3 py-2 bg-red-500 hover:bg-red-600 rounded-xl transition-colors flex items-center justify-center gap-1 text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" class="injected-svg" data-src="https://cdn.hugeicons.com/icons/delete-02-stroke-rounded.svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" color="#ffffff">
+                            <path d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path>
+                            <path d="M3 5.5H21M16.0557 5.5L15.3731 4.09173C14.9196 3.15626 14.6928 2.68852 14.3017 2.39681C14.215 2.3321 14.1231 2.27454 14.027 2.2247C13.5939 2 13.0741 2 12.0345 2C10.9688 2 10.436 2 9.99568 2.23412C9.8981 2.28601 9.80498 2.3459 9.71729 2.41317C9.32164 2.7167 9.10063 3.20155 8.65861 4.17126L8.05292 5.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path>
+                            <path d="M9.5 16.5L9.5 10.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path>
+                            <path d="M14.5 16.5L14.5 10.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path>
+                            </svg>
+                            Supprimer
+                        </button>
+                    </form>
+                    
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier des Rendez-vous</title>
+    <link rel="stylesheet" href="./../../static/output.css">
+</head>
+<body class="bg-gray-100">
+    <div id="flash-message" class="fixed top-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-md mx-auto p-4">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if category == 'success' %}
+                <div class="animate-slideDown bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-lg">
+                    <div class="flex items-center">
+                        <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="font-medium">{{ message }}</p>
+                    </div>
+                </div>
+                {% elif category == 'error' %}
+                <div class="animate-slideDown bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-lg">
+                    <div class="flex items-center">
+                        <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="font-medium">{{ message }}</p>
+                    </div>
+                </div>
+                {% elif category == 'info' %}
+                <div class="animate-slideDown bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded shadow-lg">
+                    <div class="flex items-center">
+                        <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="font-medium">{{ message }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+
+<style>
+    @keyframes slideDown {
+        0% {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .animate-slideDown {
+        animation: slideDown 0.5s ease-out forwards;
+    }
+</style>
+
+<script>
+    setTimeout(() => {
+        const flashMessage = document.getElementById('flash-message');
+        if (flashMessage) {
+            const alerts = flashMessage.children;
+            for (let alert of alerts) {
+                alert.style.transition = 'all 0.5s ease';
+                alert.style.transform = 'translateY(-100%)';
+                alert.style.opacity = '0';
+            }
+            setTimeout(() => {
+                flashMessage.remove();
+            }, 500);
+        }
+    }, 3000);
+</script>
+
+<!-- Le menu contextuel -->
+<div id="context-menu" class="hidden absolute bg-white shadow-lg rounded-lg py-2 w-48 z-50 -translate-x-10">
+    <button class="w-full px-4 py-2 text-left hover:bg-gray-100 text-gray-700 flex items-center">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        Reprogrammer
+    </button>
+    <button class="w-full px-4 py-2 text-left hover:bg-gray-100 text-red-600 flex items-center">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+        </svg>
+        Annuler
+    </button>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('#btn-more');
+    const contextMenu = document.getElementById('context-menu');
+
+    // Gestionnaire pour chaque bouton
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation(); // Empêche la propagation au document
+            
+            // Position du menu par rapport au bouton cliqué
+            const rect = this.getBoundingClientRect();
+            contextMenu.style.top = `${rect.bottom + window.scrollY + 5}px`;
+            contextMenu.style.left = `${rect.left + window.scrollX - 120}px`; // Aligné à droite du bouton
+            
+            // Affiche le menu
+            contextMenu.classList.remove('hidden');
+        });
+    });
+
+    // Ferme le menu si on clique ailleurs
+    document.addEventListener('click', function(e) {
+        if (!contextMenu.contains(e.target)) {
+            contextMenu.classList.add('hidden');
+        }
+    });
+
+    // Gestion des actions du menu
+    contextMenu.addEventListener('click', function(e) {
+        const action = e.target.closest('button');
+        if (!action) return;
+
+        const text = action.textContent.trim();
+        
+        if (text === 'Reprogrammer') {
+            // Logique pour reprogrammer
+            console.log('Reprogrammer le rendez-vous');
+        } else if (text === 'Annuler') {
+            // Logique pour annuler
+            if (confirm('Êtes-vous sûr de vouloir annuler ce rendez-vous ?')) {
+                console.log('Annuler le rendez-vous');
+            }
+        }
+
+        contextMenu.classList.add('hidden');
+    });
+});
+</script>
+    <div class="min-h-screen">
+        <!-- Mobile menu button -->
+        <div class="lg:hidden fixed top-0 left-0 z-50 p-4">
+            <button onclick="document.getElementById('sidebar').classList.toggle('-translate-x-full')" 
+                    class="p-2 rounded-lg bg-white shadow">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen bg-white border-r border-gray-200 transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0">
+            <div class="px-6 py-4">
+                <h2 class="text-xl font-bold text-gray-800">BB Call</h2>
+            </div>
+            <nav class="px-3 py-4">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="{{ url_for('admin.reservations') }}" class="flex items-center p-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                            </svg>
+                            Dashboard
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a href="#" class="flex items-center p-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path>
+                            </svg>
+                            Notifications
+                        </a>
+                    </li> -->
+                    <li>
+                        <a href="{{ url_for('admin.calendar') }}" class="flex items-center p-3 text-blue-600 bg-blue-50 rounded-lg">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                            </svg>
+                            Calendrier
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="lg:ml-64 p-4 lg:p-8 pt-16 lg:pt-8">
+            <!-- Header -->
+            <header class="mb-8">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                    <h1 class="text-2xl font-bold text-gray-900">Rendez-vous à venir</h1>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="relative">
+                            <input type="text" 
+                                   placeholder="Rechercher..." 
+                                   class="w-full sm:w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        
+            <!-- Timeline View -->
+            <div class="space-y-8">
+                {% if reservations %}
+                    {% if reservations['today'] %}
+                    <!-- Today Section -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="px-6 py-4 bg-red-50 border-b border-red-100">
+                            <h2 class="text-lg font-semibold text-red-900">Aujourd'hui - {{ today.strftime('%d %B %Y') }}</h2>
+                        </div>
+                        <div class="divide-y divide-gray-200">
+                            {% for reservation in reservations['today'] %}
+                            <a href="{{ url_for('admin.edit_reservation', rdv_id=reservation['id']) }}">
+                            <div class="p-6 hover:bg-gray-50">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="flex-shrink-0">
+                                            <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <span class="text-gray-600 font-medium">{{ reservation['fullname'][:2] if reservation['fullname'] else '--' }}</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-lg font-medium text-gray-900">{{ reservation['fullname'] or 'Sans nom' }}</h3>
+                                            <p class="text-sm text-gray-500">{{ reservation['time'] or '--:--' }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-4">
+                                        <span class="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                            Confirmer
+                                        </span>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Tomorrow Section -->
+                    {% if reservations.get('tomorrow') %}
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="px-6 py-4 bg-blue-50 border-b border-blue-100">
+                            <h2 class="text-lg font-semibold text-blue-900">Demain - {{ tomorrow.strftime('%d %B %Y') }}</h2>
+                        </div>
+                        <div class="divide-y divide-gray-200">
+                            {% for reservation in reservations['tomorrow'] %}
+                            <a href="{{ url_for('admin.edit_reservation', rdv_id=reservation['id']) }}">
+                            <div class="p-6 hover:bg-gray-50">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="flex-shrink-0">
+                                            <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <span class="text-gray-600 font-medium">{{ reservation['fullname'][:2] if reservation['fullname'] else '--' }}</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-lg font-medium text-gray-900">{{ reservation['fullname'] or 'Sans nom' }}</h3>
+                                            <p class="text-sm text-gray-500">{{ reservation['time'] or '--:--' }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-4">
+                                        <span class="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                            Confirmer
+                                        </span>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- After tomorrow Section -->
+                    {% if reservations.get('after_tomorrow') %}
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="px-6 py-4 bg-green-50 border-b border-green-100 ">
+                            <h2 class="text-lg font-semibold text-green-900">Après demain - {{ after_tomorrow.strftime('%d %B %Y') }}</h2>
+                        </div>
+                        <div class="divide-y divide-gray-200">
+                            {% for reservation in reservations['after_tomorrow'] %}
+                            <a href="{{ url_for('admin.edit_reservation', rdv_id=reservation['id']) }}">
+                            <div class="p-6 hover:bg-gray-50">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="flex-shrink-0">
+                                            <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <span class="text-gray-600 font-medium">{{ reservation['fullname'][:2] if reservation['fullname'] else '--' }}</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-lg font-medium text-gray-900">{{ reservation['fullname'] or 'Sans nom' }}</h3>
+                                            <p class="text-sm text-gray-500">{{ reservation['time'] or '--:--' }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-4">
+                                        <span class="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                            Confirmer
+                                        </span>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+            
+                    <!-- Week Section -->
+                    {% if reservations['this_week'] %}
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="px-6 py-4 bg-gray-50 border-b border-gray-100">
+                            <h2 class="text-lg font-semibold text-gray-900">Semaine prochaine</h2>
+                        </div>
+                        <div class="p-6">
+                            {% for reservation in reservations['this_week'] %}
+                            <a href="{{ url_for('admin.edit_reservation', rdv_id=reservation['id']) }}">
+                            <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="flex-shrink-0">
+                                            <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <span class="text-gray-600 font-medium">{{ reservation['fullname'][:2] if reservation['fullname'] else '--' }}</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-lg font-medium text-gray-900">{{ reservation['fullname'] or 'Sans nom' }}</h3>
+                                            <p class="text-sm text-gray-500">{{ reservation['time'] or '--:--' }}</p>
+                                            <p class="text-xs text-gray-400">{{ reservation['day'].strftime('%d %B %Y') if reservation['day'] else '--' }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-4">
+                                        <span class="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                            Confirmer
+                                        </span>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                {% else %}
+                <div class="flex flex-col items-center justify-center h-64 bg-white rounded-lg shadow">
+                    <svg class="w-16 h-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <h2 class="text-2xl font-semibold text-gray-700">Vous n'avez aucun rendez-vous</h2>
+                    <p class="mt-2 text-gray-500">Les futurs rendez-vous apparaîtront ici</p>
+                </div>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+</body>
+</html>

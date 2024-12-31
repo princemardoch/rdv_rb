@@ -6,7 +6,7 @@ RDV_OPTIONS = [
         'price_display': {'euro': '76€', 'usd': '$80', 'xof': '₣50.000'},
         'price_payment': {'euro': 76, 'usd': 80, 'xof': 50000},
         'duration': '30 minutes',
-        'description': 'Réponses rapides et conseils précis.'
+        'description': 'Réponses ciblées et conseils précis.'
     },
     {
         'name': 'option60',

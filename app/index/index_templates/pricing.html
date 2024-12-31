@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Consultations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="icon" href="https://i.ibb.co/2FZ5zh0/Capture-d-e-cran-2024-11-09-a-17-44-08.png" type="image/x-icon">
+    <style>
+        body{
+            background-image: url("{{url_for('static', filename='bg.svg')}}");
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div onclick="history.back()" class="fixed top-4 left-4 bg-gray-50 px-4 py-3 opacity-80 hover:opacity-100 rounded-lg cursor-pointer border shadow-sm hover:scale-105 transition z-50">
+        <p class="flex items-center text-gray-900 hover:text-gray-700 transition-colors">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Retour
+        </p>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 py-16">
+        <!-- En-tête -->
+        <div class="text-center mb-16">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Nos Formules de Consultation</h1>
+            <p class="text-xl text-gray-600">Choisissez la formule adaptée à vos besoins</p>
+        </div>
+
+        <!-- Grille des offres -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <!-- Consultation Basique -->
+            <div class="bg-gray-50 rounded-xl p-8 hover:shadow-md transition-shadow duration-300 cursor-pointer border shadow-sm">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2"><span class="text-3xl mr-2">⚡️</span>{{option30_name}}</h2>
+                    <p class="text-gray-600 mb-4">Séance de 30 minutes</p>
+                    <div class="flex items-baseline mb-4">
+                        <span class="text-3xl font-bold text-gray-900">{{option30_price}}</span>
+                        <span class="text-gray-600 ml-2">/ séance</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3 mb-8">
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-gray-900 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span class="text-gray-700">Réponses rapides</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-gray-900 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span class="text-gray-700">Conseils précis</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-gray-900 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span class="text-gray-700">Plan d'action</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <a href="{{url_for('index.reserve')}}" class="block w-full text-center bg-gray-900 text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors">
+                        Réserver
+                    </a>
+                    <a href="{{url_for('index.option30')}}" class="block w-full text-center text-gray-900 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                        En savoir plus
+                    </a>
+                </div>
+            </div>
+
+            <!-- Consultation de Suivi -->
+            <div class="bg-gray-50 rounded-xl p-8 hover:shadow-md transition-shadow duration-300 cursor-pointer border shadow-sm">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2"><span class="text-3xl mr-2">🎯</span>{{option60_name}}</h2>
+                    <p class="text-gray-600 mb-4">Séance d'1 heure</p>
+                    <div class="flex items-baseline mb-4">
+                        <span class="text-3xl font-bold text-gray-900">{{option60_price}}</span>
+                        <span class="text-gray-600 ml-2">/ séance</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3 mb-8">
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-gray-900 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span class="text-gray-700">Analyse approfondie</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-gray-900 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span class="text-gray-700">Stratégie claire</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-gray-900 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span class="text-gray-700">Suivi personnalisé</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <a href="{{url_for('index.reserve')}}" class="block w-full text-center bg-gray-900 text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors">
+                        Réserver
+                    </a>
+                    <a href="{{url_for('index.option60')}}" class="block w-full text-center text-gray-900 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                        En savoir plus
+                    </a>
+                </div>
+            </div>
+
+            <!-- Session d'Immersion -->
+            <div class="bg-gray-50 rounded-xl p-8 hover:shadow-md transition-shadow duration-300 cursor-pointer border shadow-sm relative overflow-hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2"><span class="text-3xl mr-2">🚀</span>{{option_full_name}}</h2>
+                    <p class="text-gray-600 mb-4">Demi-journée</p>
+                    <div class="flex items-baseline mb-4">
+                        <span class="text-3xl font-bold text-gray-900">{{option_full_price}}</span>
+                        <span class="text-gray-600 ml-2">/ session</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3 mb-8">
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-gray-900 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span class="text-gray-700">3 coachs experts</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-gray-900 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span class="text-gray-700">Transformation complète</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-gray-900 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span class="text-gray-700">Suivi 30 jours</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <a href="{{url_for('index.reserve')}}" class="block w-full text-center bg-gray-900 text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors">
+                        Réserver
+                    </a>
+                    <a href="{{url_for('index.option_full')}}" class="block w-full text-center text-gray-900 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                        En savoir plus
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section d'information -->
+        <div class="text-center max-w-2xl mx-auto">
+            <p class="text-gray-600 mb-8">
+                Toutes nos consultations incluent un compte-rendu détaillé et des recommandations personnalisées.
+                Vous pouvez changer de formule à tout moment selon vos besoins.
+            </p>
+            <a href="mailto:exemple@domaine.com?subject=Demande d'informations&body=Bonjour,%0D%0AJe veux en savoir plus sur vos services de coaching." class="inline-flex items-center text-gray-900 hover:text-gray-600 transition-colors">
+                <span class="mr-2">Nous contacter</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

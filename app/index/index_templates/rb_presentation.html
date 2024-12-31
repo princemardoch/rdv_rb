@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html style="font-family: 'Inter', serif;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BB Call - Sessions de coaching personnalisées</title>
+  
+  <link rel="icon" href="https://i.ibb.co/2FZ5zh0/Capture-d-e-cran-2024-11-09-a-17-44-08.png" type="image/x-icon">
+  <meta property="og:title" content="BB Call - Sessions de coaching personnalisées" />
+  <meta property="og:description" content="Je propose des sessions de coaching « BB Call », conçues pour offrir un moment de réflexion stratégique et de conseils directs. Mon agenda est ouvert à tous : salariés, entrepreneurs, investisseurs ou toute personne en quête de perspectives nouvelles et de solutions concrètes." />
+  <meta property="og:image" content="https://i.ibb.co/2FZ5zh0/Capture-d-e-cran-2024-11-09-a-17-44-08.png" />
+  <meta property="og:type" content="website" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BB Call - Sessions de coaching personnalisées" />
+  <meta name="twitter:description" content="Je propose des sessions de coaching « BB Call », conçues pour offrir un moment de réflexion stratégique et de conseils directs. Mon agenda est ouvert à tous : salariés, entrepreneurs, investisseurs ou toute personne en quête de perspectives nouvelles et de solutions concrètes." />
+  <meta name="twitter:image" content="https://i.ibb.co/2FZ5zh0/Capture-d-e-cran-2024-11-09-a-17-44-08.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<style>
+    body{
+        background-image: url("{{url_for('static', filename='bg.svg')}}");
+        background-size: cover;
+    }
+</style>
+</head>
+<body class="bg-white font-sans">
+    <div onclick="history.back()" class="fixed top-4 left-4 bg-gray-50 px-4 py-3 opacity-80 hover:opacity-100 rounded-lg cursor-pointer border shadow-sm hover:scale-105 transition z-50">
+        <p class="flex items-center text-gray-900 hover:text-gray-700 transition-colors">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Retour
+        </p>
+    </div>
+
+  <!-- Hero Section - Style Magazine -->
+  <div class="min-h-screen bg-white">
+      <!-- Navigation -->
+      <nav class="py-6 px-4 sm:px-6 lg:px-8 border-b">
+          <div class="max-w-7xl mx-auto flex justify-between items-center">
+              <h1 class="text-2xl font-bold">BB Call</h1>
+              <a href="{{url_for('index.reserve')}}" class="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-all">
+                  Réserver
+              </a>
+          </div>
+      </nav>
+
+      <!-- Split Hero -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[calc(100vh-80px)]">
+          <!-- Left Side - Image -->
+          <div class="relative h-[60vh] lg:h-full">
+              <div class="absolute inset-0 bg-gray-900">
+                  <img src="https://i.ibb.co/jw1NJ7p/rogerbango.jpg" alt="Roger Bango" class="w-full h-full object-cover opacity-90">
+              </div>
+          </div>
+
+          <!-- Right Side - Content -->
+          <div class="p-8 lg:p-16 flex flex-col justify-center">
+              <span class="text-sm uppercase tracking-wider text-gray-500 mb-4">Expert en Transformation Digitale</span>
+              <h2 class="text-5xl font-bold mb-6">Roger Bango</h2>
+              <p class="text-xl text-gray-600 mb-8">
+                Roger Bango est un styliste ivoirien renommé, fondateur de Korha Creation, qui a révolutionné la mode en Côte d'Ivoire. A été récompensé par de prestigieux prix, dont le Grand Prix International Padel et les Prix National d'Excellence national de 2019 à 2022
+              </p>
+              <div class="flex flex-wrap gap-4 mb-8">
+                  <span class="px-4 py-2 bg-gray-100 rounded-full text-sm">20+ ans d'expérience</span>
+                  <span class="px-4 py-2 bg-gray-100 rounded-full text-sm">500+ entrepreneurs coachés</span>
+                  <span class="px-4 py-2 bg-gray-100 rounded-full text-sm">Styliste</span>
+                  <span class="px-4 py-2 bg-gray-100 rounded-full text-sm">Coach</span>
+                  <span class="px-4 py-2 bg-gray-100 rounded-full text-sm">Formateur agréé</span>
+              </div>
+          </div>
+      </div>
+
+      <!-- Expertise Section -->
+      <div class="bg-black text-white py-20">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                  <div>
+                      <span class="text-sm uppercase tracking-wider text-gray-400">Expertise</span>
+                      <h2 class="text-4xl font-bold mt-2 mb-8">Un accompagnement d'excellence</h2>
+                      <div class="space-y-6">
+                          <p class="text-xl text-gray-300">Expert en transformation digitale et stratégie business, j'accompagne entrepreneurs et dirigeants vers leur réussite.</p>
+                          <ul class="space-y-4 text-gray-300">
+                              <li class="flex items-center gap-4">
+                                  <span class="text-2xl">✦</span>
+                                  <span>PDG de Korha Creation ( Certifier ISO ) </span>
+                              </li>
+                              <li class="flex items-center gap-4">
+                                  <span class="text-2xl">✦</span>
+                                  <span>3x Prix d'excellence national</span>
+                              </li>
+                              <li class="flex items-center gap-4">
+                                  <span class="text-2xl">✦</span>
+                                  <span>Auteur littéraire</span>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+                  <div class="grid grid-cols-2 gap-8">
+                      <div class="bg-gray-900 p-8 rounded-3xl">
+                          <h3 class="text-4xl font-bold mb-4">20+</h3>
+                          <p class="text-gray-400">Années d'expérience</p>
+                      </div>
+                      <div class="bg-gray-900 p-8 rounded-3xl">
+                          <h3 class="text-4xl font-bold mb-4">500+</h3>
+                          <p class="text-gray-400">Entrepreneurs coachés</p>
+                      </div>
+                      <div class="bg-gray-900 p-8 rounded-3xl">
+                          <h3 class="text-4xl font-bold mb-4">15+</h3>
+                          <p class="text-gray-400">Prix et distinctions nationaux et internationaux</p>
+                      </div>
+                      <div class="bg-gray-900 p-8 rounded-3xl">
+                          <h3 class="text-4xl font-bold mb-4">100%</h3>
+                          <p class="text-gray-400">Satisfaction client</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="py-24 bg-gray-50">
+        <div class="mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-gray-900 mb-16">Ils me font confiance</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border">
+                    <div class="text-blue-600 text-4xl mb-4">"</div>
+                    <p class="text-gray-600 mb-6">Les conseils de Roger m'ont permis de doubler mon chiffre d'affaires en 6 mois. Son expertise est inestimable.</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full mr-4"></div>
+                        <div>
+                            <div class="font-bold">Sophie Martin</div>
+                            <div class="text-gray-500">CEO, TechStart</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm border">
+                    <div class="text-blue-600 text-4xl mb-4">"</div>
+                    <p class="text-gray-600 mb-6">Une vision stratégique exceptionnelle qui m'a aidé à pivoter mon business model avec succès.</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full mr-4"></div>
+                        <div>
+                            <div class="font-bold">Thomas Dubois</div>
+                            <div class="text-gray-500">Fondateur, InnovatePro</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-sm border">
+                    <div class="text-blue-600 text-4xl mb-4">"</div>
+                    <p class="text-gray-600 mb-6">Une vision stratégique exceptionnelle qui m'a aidé à pivoter mon business model avec succès.</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full mr-4"></div>
+                        <div>
+                            <div class="font-bold">Thomas Dubois</div>
+                            <div class="text-gray-500">Fondateur, InnovatePro</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm border">
+                    <div class="text-blue-600 text-4xl mb-4">"</div>
+                    <p class="text-gray-600 mb-6">L'accompagnement de Roger a été déterminant dans notre levée de fonds réussie.</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full mr-4"></div>
+                        <div>
+                            <div class="font-bold">Marie Leroy</div>
+                            <div class="text-gray-500">COO, FutureTech</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      <!-- CTA Section -->
+      <div class="py-20 px-4 sm:px-6 lg:px-8">
+          <div class="max-w-7xl mx-auto text-center">
+              <h2 class="text-4xl font-bold mb-8">Prêt à transformer votre business ?</h2>
+              <a href="{{url_for('index.reserve')}}" class="inline-block bg-black text-white px-12 py-4 rounded-full text-lg font-semibold hover:bg-gray-800 transition-all">
+                  Réserver une session →
+              </a>
+          </div>
+      </div>
+  </div>
+</body>
+</html>

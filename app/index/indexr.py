@@ -75,11 +75,33 @@ def contact():
 @index_.route('/success', methods=['GET'])
 def success():
     reservation_data = session.get('reservation_data')
-    session.clear()
+    session.pop('reservation_data')
     return render_template('success.html', reservation_data=reservation_data)
+
+@index_.route('/pricing', methods=['GET'])
+def pricing():
+    option30_name = RDV_OPTIONS[0].get('display_name')
+    option60_name = RDV_OPTIONS[1].get('display_name')
+    option_full_name = RDV_OPTIONS[2].get('display_name')
+    
+    option30_price = RDV_OPTIONS[0].get('price_display').get('xof')
+    option60_price = RDV_OPTIONS[1].get('price_display').get('xof')
+    option_full_price = RDV_OPTIONS[2].get('price_display').get('xof')
+    return render_template('pricing.html', option30_price=option30_price, option60_price=option60_price, option_full_price=option_full_price, option30_name=option30_name, option60_name=option60_name, option_full_name=option_full_name)
 
 @index_.route('/reset', methods=['GET'])
 def reset():
     session.clear()
-    flash('Session réinitialisée.')
     return redirect(url_for('index'))
+
+@index_.route('/option30', methods=['GET'])
+def option30():
+    return render_template('option30.html', rdv_info=RDV_OPTIONS)
+
+@index_.route('/option60', methods=['GET'])
+def option60():
+    return render_template('option60.html', rdv_info=RDV_OPTIONS)
+
+@index_.route('/option_full', methods=['GET'])
+def option_full():
+    return render_template('option_full.html', rdv_info=RDV_OPTIONS)

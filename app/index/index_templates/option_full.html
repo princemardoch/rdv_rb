@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session d'Immersion - En détail</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="icon" href="https://i.ibb.co/2FZ5zh0/Capture-d-e-cran-2024-11-09-a-17-44-08.png" type="image/x-icon">
+</head>
+<style>
+    body{
+        background-image: url("{{url_for('static', filename='bg.svg')}}");
+        background-size: cover;
+    }
+</style>
+<body class="bg-white">
+    <div onclick="history.back()" class="fixed top-4 left-4 bg-gray-50 px-4 py-3 opacity-80 hover:opacity-100 rounded-lg cursor-pointer border shadow-sm hover:scale-105 transition z-50">
+        <p class="flex items-center text-gray-900 hover:text-gray-600 transition-colors">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Retour
+        </p>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-4 py-12">
+        <!-- En-tête Premium -->
+        <div class="text-center mb-16">
+            <span class="inline-block bg-gray-900 text-white px-4 py-2 rounded-full text-sm mb-4">Expérience Premium</span>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Session d'Immersion</h1>
+            <p class="text-xl text-gray-600">Une demi-journée transformative avec une équipe de 3 coachs experts</p>
+        </div>
+
+        <!-- COach -->
+        <div class="bg-gray-50 p-8 rounded-lg mb-16 border shadow-sm">
+            <h2 class="text-2xl font-bold text-gray-900 mb-8 text-center">Nos coach principaux</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-24 h-24 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 24 24" fill="none" class="injected-svg" data-src="https://cdn.hugeicons.com/icons/chart-breakout-circle-duotone-rounded.svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" color="#04ca58">
+                            <path opacity="0.4" d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" fill="#04ca58"></path>
+                            <path d="M16 3.38462V2M19.6306 4.36369L20.6081 3.38462M20.6176 8H22" stroke="#04ca58" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2" stroke="#04ca58" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M11.8527 8.00684H15.0748C15.4536 8.00684 15.7607 8.32175 15.7607 8.71022V12.0354M2.76074 13.9583C5.03399 14.2241 10.7383 13.5137 14.8923 8.88963" stroke="#04ca58" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                    </div>
+                    <h3 class="font-semibold text-gray-900">Coach Stratégique</h3>
+                    <p class="text-gray-700">Vision globale et objectifs</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-24 h-24 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" class="injected-svg" data-src="https://cdn.hugeicons.com/icons/task-done-02-duotone-rounded.svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" color="#da700a">
+                            <path opacity="0.4" d="M3.52513 3.07862C2.5 4.1577 2.5 5.89445 2.5 9.36796V14.6311C2.5 18.1046 2.5 19.8414 3.52513 20.9205C4.55025 21.9995 6.20016 21.9995 9.49998 21.9995H12.5C15.7998 21.9995 17.4497 21.9995 18.4749 20.9205C19.5 19.8414 19.5 18.1046 19.5 14.6311V9.36796C19.5 5.89445 19.5 4.1577 18.4749 3.07862C17.6968 2.25962 16.5589 2.06223 14.6128 2.01465C14.816 2.07048 14.9544 2.27324 14.9178 2.49274C14.7183 3.68997 14.6185 4.2886 14.1989 4.64407C13.7793 4.99954 13.1724 4.99954 11.9586 4.99954H10.0414C8.82762 4.99954 8.22075 4.99954 7.80113 4.64407C7.38151 4.2886 7.28174 3.68998 7.0822 2.49274C7.04562 2.27323 7.18405 2.07047 7.38721 2.01465C5.44114 2.06222 4.30318 2.25962 3.52513 3.07862Z" fill="#da700a"></path>
+                            <path d="M19.5 13V9.36842C19.5 5.89491 19.5 4.15816 18.4749 3.07908C17.4497 2 15.7998 2 12.5 2H9.5C6.20017 2 4.55025 2 3.52513 3.07908C2.5 4.15816 2.5 5.89491 2.5 9.36842V14.6316C2.5 18.1051 2.5 19.8418 3.52513 20.9209C4.55025 22 6.20017 22 9.5 22H11" stroke="#da700a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M13.5 20C13.5 20 14.5 20 15.5 22C15.5 22 18.6765 17 21.5 16" stroke="#da700a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M7 2L7.0822 2.4932C7.28174 3.69044 7.38151 4.28906 7.80113 4.64453C8.22075 5 8.82762 5 10.0414 5H11.9586C13.1724 5 13.7793 5 14.1989 4.64453C14.6185 4.28906 14.7183 3.69044 14.9178 2.4932L15 2" stroke="#da700a" stroke-width="2" stroke-linejoin="round"></path>
+                            <path d="M7 16H11M7 11H15" stroke="#da700a" stroke-width="2" stroke-linecap="round"></path>
+                            </svg>
+                    </div>
+                    <h3 class="font-semibold text-gray-900">Coach Opérationnel</h3>
+                    <p class="text-gray-700">Mise en œuvre et process</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-24 h-24 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 24 24" fill="none" class="injected-svg" data-src="https://cdn.hugeicons.com/icons/money-exchange-03-duotone-rounded.svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" color="#0472ca">
+                            <path opacity="0.4" d="M7.25 13.5156C9.08032 12.7609 10.6915 13.0122 11.5651 13.1723C11.8138 13.2179 12 13.4618 12 13.7453V20.2043C12 20.5428 11.738 20.7953 11.4407 20.7428C10.5437 20.5842 8.99663 20.3883 7.25 21.1085C5.37206 21.8828 3.48197 22.0285 2.45052 21.9958C2.19389 21.9877 2 21.7457 2 21.4568V14.9947C2 14.6617 2.25525 14.3998 2.55116 14.4055C3.60178 14.4258 5.43158 14.2654 7.25 13.5156Z" fill="#0472ca"></path>
+                            <path d="M2 10C2 6.68286 4.68286 4 8 4L7.14286 5.71429" stroke="#0472ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M22 14C22 17.3171 19.3171 20 16 20L16.8571 18.2857" stroke="#0472ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M17.25 2.5156C19.0803 1.76088 20.6915 2.01217 21.5651 2.17234C21.8138 2.21794 22 2.46181 22 2.74528V9.20426C22 9.54282 21.738 9.79534 21.4407 9.74278C20.5437 9.58416 18.9966 9.38826 17.25 10.1085C15.3721 10.8828 13.482 11.0285 12.4505 10.9958C12.1939 10.9877 12 10.7457 12 10.4568V3.99467C12 3.66171 12.2552 3.39978 12.5512 3.40549C13.6018 3.42576 15.4316 3.2654 17.25 2.5156Z" stroke="#0472ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M7.25 13.5156C9.08032 12.7609 10.6915 13.0122 11.5651 13.1723C11.8138 13.2179 12 13.4618 12 13.7453V20.2043C12 20.5428 11.738 20.7953 11.4407 20.7428C10.5437 20.5842 8.99663 20.3883 7.25 21.1085C5.37206 21.8828 3.48197 22.0285 2.45052 21.9958C2.19389 21.9877 2 21.7457 2 21.4568V14.9947C2 14.6617 2.25525 14.3998 2.55116 14.4055C3.60178 14.4258 5.43158 14.2654 7.25 13.5156Z" stroke="#0472ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M16.9998 6.5H17.0088" stroke="#0472ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M6.99981 17.5H7.00879" stroke="#0472ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-gray-900">Coach rentabilité</h3>
+                    <p class="text-gray-700">Consultant en rentabilité</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Programme détaillé -->
+        <div class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-900 mb-8">Programme de la demi-journée</h2>
+            <div class="space-y-8">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 bg-gray-900 text-white w-8 h-8 rounded-full flex items-center justify-center mr-4">1</div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Phase d'immersion (1h)</h3>
+                        <p class="text-gray-700">Analyse approfondie de votre situation actuelle, identification des défis et opportunités avec l'équipe complète.</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 bg-gray-900 text-white w-8 h-8 rounded-full flex items-center justify-center mr-4">2</div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Sessions spécialisées (2h)</h3>
+                        <p class="text-gray-700">Ateliers individuels avec chaque coach pour approfondir les aspects stratégiques, opérationnels et techniques.</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 bg-gray-900 text-white w-8 h-8 rounded-full flex items-center justify-center mr-4">3</div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Synthèse et plan d'action (1h)</h3>
+                        <p class="text-gray-700">Réunion de consolidation avec l'équipe complète, établissement d'une feuille de route détaillée et des prochaines étapes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ce qui est inclus -->
+        <div class="bg-gray-50 p-8 rounded-lg mb-16 border shadow-sm">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Ce qui est inclus</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex items-start">
+                    <svg class="w-6 h-6 mr-3 text-gray-900 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <p class="text-gray-700">Document stratégique personnalisé de 15-20 pages</p>
+                </div>
+                <div class="flex items-start">
+                    <svg class="w-6 h-6 mr-3 text-gray-900 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <p class="text-gray-700">Outils et templates sur mesure</p>
+                </div>
+                <div class="flex items-start">
+                    <svg class="w-6 h-6 mr-3 text-gray-900 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <p class="text-gray-700">Suivi prioritaire pendant 30 jours</p>
+                </div>
+                <div class="flex items-start">
+                    <svg class="w-6 h-6 mr-3 text-gray-900 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <p class="text-gray-700">Accès à notre réseau d'experts</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pour qui -->
+        <div class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Idéal pour</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-gray-50 p-6 rounded-lg border shadow-sm">
+                    <h3 class="font-semibold text-gray-900 mb-3">Entrepreneurs établis</h3>
+                    <p class="text-gray-700">Qui cherchent à franchir un cap significatif dans leur développement</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg border shadow-sm">
+                    <h3 class="font-semibold text-gray-900 mb-3">Dirigeants</h3>
+                    <p class="text-gray-700">Face à des défis complexes nécessitant une approche multidimensionnelle</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center">
+            <p class="text-gray-600 mb-4">Possible en groupes ( max 4 )</p>
+            <a href="{{url_for('index.reserve')}}" class="inline-block bg-gray-900 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-800 shadow-md border hover:scale-105 transition">
+                Réserver ma session d'immersion
+            </a>
+        </div>
+    </div>
+</body>
+</html>

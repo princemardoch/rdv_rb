@@ -1,47 +1,91 @@
 <!DOCTYPE html>
-<html style="font-family: 'Inter', serif;">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BB Call - Sessions de coaching personnalisées</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Bienvenue</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/choices.js/10.1.0/choices.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/choices.js/10.1.0/choices.min.js"></script>
 
-  <!-- Meta tags Open Graph pour Facebook, LinkedIn, etc -->
-  <meta property="og:title" content="BB Call - Sessions de coaching personnalisées" />
-  <meta property="og:description" content="Je propose des sessions de coaching « BB Call », conçues pour offrir un moment de réflexion stratégique et de conseils directs. Mon agenda est ouvert à tous : salariés, entrepreneurs, investisseurs ou toute personne en quête de perspectives nouvelles et de solutions concrètes." />
-  <meta property="og:image" content="https://i.ibb.co/2FZ5zh0/Capture-d-e-cran-2024-11-09-a-17-44-08.png" />
-  <meta property="og:url" content="https://votre-site.com" />
-  <meta property="og:type" content="website" />
-
-  <!-- Meta tags pour Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="BB Call - Sessions de coaching personnalisées" />
-  <meta name="twitter:description" content="Je propose des sessions de coaching « BB Call », conçues pour offrir un moment de réflexion stratégique et de conseils directs. Mon agenda est ouvert à tous : salariés, entrepreneurs, investisseurs ou toute personne en quête de perspectives nouvelles et de solutions concrètes." />
-  <meta name="twitter:image" content="https://i.ibb.co/2FZ5zh0/Capture-d-e-cran-2024-11-09-a-17-44-08.png" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-<style>
-    body{
-        background-image: url('bg.svg');
-        background-size: cover;
-    }
-</style>
+    <link rel="icon" href="https://i.ibb.co/2FZ5zh0/Capture-d-e-cran-2024-11-09-a-17-44-08.png" type="image/x-icon">
 </head>
-<body class="bg-gray-100 font-poppins">
-    <div class="flex items-center justify-center">
-        <div class="flex flex-col items-start justify-center h-screen px-4 sm:px-6 lg:px-8">
-            <div class="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 mb-8 rounded-full overflow-hidden shadow-lg">
-              <img src="https://i.ibb.co/2FZ5zh0/Capture-d-e-cran-2024-11-09-a-17-44-08.png" alt="Coach profile picture" class="w-full h-full object-cover">
+    <div class="h-screen relative flex justify-center items-center bg-gradient-to-br from-blue-900 to-blue-700">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <!-- Colonne de gauche avec photo -->
+                <div class="flex justify-center lg:justify-start">
+                    <div class="relative w-full max-w-sm">
+                        <!-- Photo principale -->
+                        <div class="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-80 lg:h-80 mx-auto rounded-full overflow-hidden border-4 border-white/30">
+                            <img src="https://i.ibb.co/2FZ5zh0/Capture-d-e-cran-2024-11-09-a-17-44-08.png" alt="Roger Bango" class="w-full h-full object-cover">
+                        </div>
+                        
+                        <!-- Distinctions flottantes responsives -->
+                        <div class="hidden sm:flex absolute -top-4 right-4 sm:-right-4 bg-white/10 backdrop-blur-md px-3 sm:px-4 py-2 rounded-full text-white border border-white/20 items-center space-x-2 text-sm sm:text-base">
+                            <span class="text-lg sm:text-xl">🏆</span>
+                            <span>15+ Distinction</span>
+                        </div>
+                        
+                        <div class="hidden sm:flex absolute -bottom-4 left-4 sm:-left-4 bg-white/10 backdrop-blur-md px-3 sm:px-4 py-2 rounded-full text-white border border-white/20 items-center space-x-2 text-sm sm:text-base">
+                            <span class="text-lg sm:text-xl">📚</span>
+                            <span>Auteur littéraire</span>
+                        </div>
+                        
+                        <div class="hidden sm:flex absolute top-1/2 right-0 sm:-right-8 transform translate-x-0 sm:translate-x-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-md px-3 sm:px-4 py-2 rounded-full text-white border border-white/20 items-center space-x-2 text-sm sm:text-base">
+                            <span class="text-lg sm:text-xl">🎯</span>
+                            <span>formateur agréé</span>
+                        </div>
+    
+                        <!-- Version mobile des distinctions -->
+                        <div class="flex sm:hidden flex-wrap justify-center gap-2 mt-4">
+                            <div class="bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-white border border-white/20 flex items-center space-x-2 text-sm">
+                                <span>🏆 15+ Distinctions</span>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-white border border-white/20 flex items-center space-x-2 text-sm">
+                                <span>📚 Auteur littéraire</span>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-white border border-white/20 flex items-center space-x-2 text-sm">
+                                <span>🎯 formateur agréé</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Colonne de droite avec texte -->
+                <div class="text-center lg:text-left text-white mt-8 lg:mt-0">
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">Roger Bango</h1>
+                    <p class="text-lg sm:text-xl lg:text-2xl mb-6 text-blue-200">Styliste, coach, formateur agréé</p>
+                    <p class="text-base sm:text-lg mb-8 text-blue-100">Transformez vos défis en opportunités avec BB Call, un coaching personnalisé pour entrepreneurs ambitieux.</p>
+                    
+                    <!-- Stats rapides -->
+                    <div class="flex flex-wrap gap-3 sm:gap-4 justify-center lg:justify-start mb-8">
+                        <div class="bg-white/10 backdrop-blur-md px-4 sm:px-6 py-2 sm:py-3 rounded-xl border border-white/20">
+                            <div class="text-xl sm:text-2xl font-bold">200+</div>
+                            <div class="text-sm sm:text-base text-blue-200">Accompagnements</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-md px-4 sm:px-6 py-2 sm:py-3 rounded-xl border border-white/20">
+                            <div class="text-xl sm:text-2xl font-bold">15+</div>
+                            <div class="text-sm sm:text-base text-blue-200">Pays</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-md px-4 sm:px-6 py-2 sm:py-3 rounded-xl border border-white/20">
+                            <div class="text-xl sm:text-2xl font-bold">20+</div>
+                            <div class="text-sm sm:text-base text-blue-200">Années d'exp.</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Call to action -->
+                    <div class="flex flex-wrap gap-3 sm:gap-4 justify-center lg:justify-start">
+                        <a href="{{url_for('index.reserve')}}" class="w-full sm:w-auto bg-white text-blue-900 px-6 sm:px-8 py-3 rounded-full font-bold hover:bg-blue-50 transition-colors text-center">
+                            Réserver une séance
+                        </a>
+                        <a href="{{url_for('index.pricing')}}" class="w-full sm:w-auto border-2 border-white text-white px-6 sm:px-8 py-3 rounded-full font-bold hover:bg-white/10 transition-colors text-center">
+                            Voir les offres
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="text-left max-w-xl mb-5">
-              <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-2">🚀 BB Call</h2>
-              <p class="text-gray-600 leading-relaxed text-base">Je propose des sessions de coaching « BB Call », conçues pour offrir un moment de réflexion stratégique et de conseils directs. Mon agenda est ouvert à tous : salariés, entrepreneurs, investisseurs ou toute personne en quête de perspectives nouvelles et de solutions concrètes. Les sujets abordés peuvent être aussi bien professionnels que personnels, car une vue d'ensemble est souvent nécessaire pour avancer efficacement.</p>
-            </div>
-            <a href="{{url_for('index.reserve')}}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition-transform duration-300 transform hover:-translate-y-1">
-              Réserver une séance ->
-            </a>
-          </div>
+        </div>
     </div>
-</body>
+
 </html>

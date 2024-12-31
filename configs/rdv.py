@@ -5,7 +5,7 @@ RDV_OPTIONS = [
         'subtitle': 'Séance basique',
         'price_display': {'euro': '76€', 'usd': '$80', 'xof': '₣50.000'},
         'price_payment': {'euro': 76, 'usd': 80, 'xof': 50000},
-        'duration': '30 minutes',
+        'duration': '35 minutes',
         'description': 'Réponses ciblées et conseils précis.'
     },
     {

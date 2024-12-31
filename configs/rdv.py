@@ -24,6 +24,6 @@ RDV_OPTIONS = [
         'price_display': {'euro': '770€', 'usd': '$805', 'xof': '₣250.000'},
         'price_payment': {'euro': 770, 'usd': 805, 'xof': 500000},
         'duration': 'Demi journée',
-        'description': 'Transformation complète en demi journée avec 3 coachs.'
+        'description': 'Transformation complète en demi journée avec des coachs experts.'
     }
 ]
